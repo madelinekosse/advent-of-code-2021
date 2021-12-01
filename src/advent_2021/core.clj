@@ -18,6 +18,5 @@
      :part-2 (when p2-func (p2-func input))}))
 
 (defn all-days
-  "I don't do a whole lot."
   []
   (map run-day days))

@@ -1,29 +1,18 @@
-(ns advent-2021.day1
-  (:require [advent-2021.utils.input :as i]))
+(ns advent-2021.day1)
 
-(defn count-increases [input-vec]
-  (loop [previous-num (first input-vec)
+(defn- count-increases-by-window-size [input-vec window-size]
+  (loop [previous-sum (->> input-vec (take window-size) (apply +))
          nums-to-process (rest input-vec)
          increase-count 0]
-    (cond
-      (empty? nums-to-process) increase-count
-      (> (first nums-to-process) previous-num) (recur (first nums-to-process) (rest nums-to-process) (inc increase-count))
-      :else (recur (first nums-to-process) (rest nums-to-process) increase-count))))
+    (if (>= (count nums-to-process) window-size)
+      (let [window-sum (->> nums-to-process (take window-size) (apply +))]
+        (recur window-sum
+               (rest nums-to-process)
+               (if (> window-sum previous-sum) (inc increase-count) increase-count)))
+      increase-count)))
 
-(defn sliding-window-groups [input-vec]
-  (loop [groups []
-         remaining input-vec]
-    (if (< (count remaining) 3)
-      groups
-      (let [group (vec (take 3 remaining))]
-        (recur (conj groups group) (drop 1 remaining))))))
-
-(defn sum-sliding-window [input-vec]
-  (->> input-vec
-       sliding-window-groups
-       (map #(apply + %))))
+(defn count-increases [input-vec]
+  (count-increases-by-window-size input-vec 1))
 
 (defn count-increases-sliding-window [input-vec]
-  (-> input-vec
-      sum-sliding-window
-      count-increases))
+  (count-increases-by-window-size input-vec 3))
