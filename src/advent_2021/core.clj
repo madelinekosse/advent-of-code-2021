@@ -1,15 +1,18 @@
 (ns advent-2021.core
   (:require
    [advent-2021.day1 :as day1]
+   [advent-2021.day2 :as day2]
    [advent-2021.utils.input :as i]))
-
-(def day1-input (i/file->int-vec "day1"))
 
 (def days [{:input-file "day1"
             :input-parse-fn i/file->int-vec
             :p1-func day1/count-increases
             :p2-func day1/count-increases-sliding-window
-            :day-num 1}])
+            :day-num 1}
+           {:input-file "day2"
+            :input-parse-fn i/parse-space-delim-rows
+            :p1-func day2/move-and-multiply-location
+            :day-num 2}])
 
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
   (let [input (input-parse-fn input-file)]
