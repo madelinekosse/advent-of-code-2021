@@ -11,7 +11,8 @@
             :day-num 1}
            {:input-file "day2"
             :input-parse-fn i/parse-space-delim-rows
-            :p1-func day2/move-and-multiply-location
+            :p1-func day2/move-and-multiply-location-p1
+            :p2-func day2/move-and-multiply-location-p2
             :day-num 2}])
 
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
