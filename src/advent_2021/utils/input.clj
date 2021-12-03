@@ -2,7 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 
-(defn- lines [file]
+(defn lines [file]
   (let [f (->> file
                (str "input/")
                io/resource)]
