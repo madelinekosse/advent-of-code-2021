@@ -34,3 +34,8 @@
   (testing "Power consumption is product of gamma and epsilon"
     (is (= 198
            (sut/power-consumption sample-input)))))
+
+(deftest test-life-support-rating
+  (testing "Life support rating"
+    (is (= 230
+           (sut/life-support-rating sample-input)))))

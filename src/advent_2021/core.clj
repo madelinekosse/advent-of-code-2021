@@ -18,6 +18,7 @@
            {:input-file "day3"
             :input-parse-fn i/lines
             :p1-func day3/power-consumption
+            :p2-func day3/life-support-rating
             :day-num 3}])
 
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
