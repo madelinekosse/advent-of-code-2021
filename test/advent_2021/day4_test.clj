@@ -49,16 +49,14 @@
   (let [players [{:player 1 :board (sut/board board-1)}
                  {:player 2 :board (sut/board board-2)}
                  {:player 3 :board (sut/board board-3)}]
-        winners (sut/play-bingo players numbers-to-call)]
-    (testing "There is only one winner"
-      (is (= 1 (count winners))))
+        winner (sut/play-bingo players numbers-to-call)]
     (testing "Winner is player 3"
-      (is (= 3 (:player (first winners)))))
+      (is (= 3 (:player winner))))
     (testing "Winning number was 24"
-      (is (= 24 (:winning-number (first winners)))))
+      (is (= 24 (:winning-number winner))))
     (testing "Winning store is calculated"
       (is (= 4512
-             (sut/score (first winners)))))))
+             (sut/score winner))))))
 
 (deftest test-parse-input-files
   (let [inputs (sut/parse-input-files {:boards "day4-sample-boards" :numbers "day4-sample-numbers"})]
@@ -71,3 +69,16 @@
     (testing "Correct boards parsed"
       (is (= [board-1 board-2 board-3]
              (:boards inputs))))))
+
+(deftest test-play-bingo-loser
+  (let [players [{:player 1 :board (sut/board board-1)}
+                 {:player 2 :board (sut/board board-2)}
+                 {:player 3 :board (sut/board board-3)}]
+        loser (sut/play-bingo-to-lose players numbers-to-call)]
+    (testing "Loser is player 2"
+      (is (= 2 (:player loser))))
+    (testing "Loser won last with 13"
+      (is (= 13 (:winning-number loser))))
+    (testing "Winning store is calculated"
+      (is (= 1924
+             (sut/score loser))))))

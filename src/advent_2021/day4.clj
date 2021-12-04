@@ -41,25 +41,27 @@
     (contains-winning-row? (columns board)) true
     :else false))
 
-(defn- call-and-check-winner-state [player-states number]
-  (->> player-states
-       (map (fn [state]
-              (update state :board #(call-number % number))))
-       (map (fn [{:keys [board] :as state}]
-              (if (winner? board)
-                (assoc state :winning-number number)
-                state)))))
+(defn play-one-board-bingo [player-board numbers]
+  (loop [state player-board
+         num-idx 0]
+    (if (= num-idx (count numbers))
+      state
+      (let [next-num (nth numbers num-idx)
+            new-state (update state :board #(call-number % next-num))]
+        (if (winner? (:board new-state))
+          (merge new-state {:winning-number next-num :win-index num-idx})
+          (recur new-state (inc num-idx)))))))
+
+(defn- play-and-sort-results [player-boards numbers]
+  (->> player-boards
+       (map #(play-one-board-bingo % numbers))
+       (sort-by :win-index)))
 
 (defn play-bingo [player-boards numbers]
-  (loop [boards player-boards
-         to-call numbers]
-    (if (empty? to-call)
-      {} ;; no winner
-      (let [updated (call-and-check-winner-state boards (first to-call))
-            winners (filter :winning-number updated)]
-        (if (empty? winners)
-          (recur updated (rest to-call))
-          winners)))))
+  (first (play-and-sort-results player-boards numbers)))
+
+(defn play-bingo-to-lose [player-boards numbers]
+  (last (play-and-sort-results player-boards numbers)))
 
 (defn- sum-unmarked [board]
   (->> board
@@ -72,9 +74,17 @@
   (* winning-number
      (sum-unmarked board)))
 
+(defn- init-players [boards]
+  (map-indexed (fn [i b]
+                 {:player i :board (board b)})
+               boards))
+
 (defn run-part-1 [{:keys [boards numbers]}]
-  (let [players (map-indexed (fn [i b]
-                               {:player i :board (board b)})
-                             boards)
-        winner (first (play-bingo players numbers))]
+  (let [players (init-players boards)
+        winner (play-bingo players numbers)]
     (score winner)))
+
+(defn run-part-2 [{:keys [boards numbers]}]
+  (let [players (init-players boards)
+        loser (play-bingo-to-lose players numbers)]
+    (score loser)))

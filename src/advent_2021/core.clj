@@ -24,6 +24,7 @@
            {:input-file {:boards "day4-boards" :numbers "day4-numbers"}
             :input-parse-fn day4/parse-input-files
             :p1-func day4/run-part-1
+            :p2-func day4/run-part-2
             :day-num 4}])
 
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
