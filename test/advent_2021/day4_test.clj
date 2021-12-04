@@ -67,4 +67,7 @@
              (:numbers inputs))))
     (testing "Right number of boards parsed"
       (is (= 3
-             (count (:boards inputs)))))))
+             (count (:boards inputs)))))
+    (testing "Correct boards parsed"
+      (is (= [board-1 board-2 board-3]
+             (:boards inputs))))))
