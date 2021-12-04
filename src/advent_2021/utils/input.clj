@@ -14,8 +14,17 @@
        lines
        (map #(Integer/parseInt %))))
 
-(defn parse-space-delim-rows [file]
+(defn- parse-delim-rows [file delim]
   (->> file
        lines
-       (map #(string/split % #" "))
-       (map #(map read-string %))))
+       (map #(string/split % delim))
+       (map #(filter (partial not= "") %))
+       (map #(map read-string %))
+       (map vec)
+       vec))
+
+(defn parse-space-delim-rows [file]
+  (parse-delim-rows file #"\s+"))
+
+(defn parse-comma-delim-rows [file]
+  (parse-delim-rows file #","))
