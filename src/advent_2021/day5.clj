@@ -23,6 +23,12 @@
         {to-x :x} to]
     (= from-x to-x)))
 
+(defn- diagonal-45? [coords]
+  (let [[x1 x2] (sort (map :x coords))
+        [y1 y2] (sort (map :y coords))]
+    (= (- x2 x1)
+       (- y2 y1))))
+
 (defn filter-remove-diagonals [lines]
   (filter #(or (vertical? %) (horizontal? %)) lines))
 
@@ -42,10 +48,22 @@
     (map (fn [y] {:x x :y y})
          (range from-y (inc to-y)))))
 
+(defn- points-crossed-diag [[from to]]
+  (let [{x1 :x y1 :y} from
+        {x2 :x y2 :y} to
+        x-direction (if (< x1 x2) inc dec)
+        y-direction (if (< y1 y2) inc dec)]
+    (loop [points [from]]
+      (let [{last-x :x last-y :y :as last-point} (last points)]
+        (if (= last-point to)
+          points
+          (recur (conj points {:x (x-direction last-x) :y (y-direction last-y)})))))))
+
 (defn points-crossed [line]
   (cond
     (vertical? line) (points-crossed-vert line)
-    (horizontal? line) (points-crossed-horiz line)))
+    (horizontal? line) (points-crossed-horiz line)
+    (diagonal-45? line) (points-crossed-diag line)))
 
 (defn- line-count-by-point [lines]
   (let [points-crossed (->> lines
@@ -69,4 +87,9 @@
   (-> input-lines
       input-rows->lines
       filter-remove-diagonals
+      count-intersections))
+
+(defn run-part-2 [input-lines]
+  (-> input-lines
+      input-rows->lines
       count-intersections))

@@ -30,6 +30,7 @@
            {:input-file "day5"
             :input-parse-fn i/lines
             :p1-func day5/run-part-1
+            :p2-func day5/run-part-2
             :day-num 5}])
 
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
