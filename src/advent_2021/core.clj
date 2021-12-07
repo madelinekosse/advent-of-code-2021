@@ -6,6 +6,7 @@
    [advent-2021.day4 :as day4]
    [advent-2021.day5 :as day5]
    [advent-2021.day6 :as day6]
+   [advent-2021.day7 :as day7]
    [advent-2021.utils.input :as i]))
 
 (def days [{:input-file "day1"
@@ -37,7 +38,12 @@
             :input-parse-fn (comp first i/parse-comma-delim-rows)
             :p1-func (partial day6/count-lanternfish-after-n-days 80)
             :p2-func (partial day6/count-lanternfish-after-n-days 256)
-            :day-num 6}])
+            :day-num 6}
+           {:input-file "day7"
+            :input-parse-fn (comp first i/parse-comma-delim-rows)
+            :p1-func day7/align-submarines-p1
+            :p2-func day7/align-submarines-p2
+            :day-num 7}])
 
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
   (let [input (input-parse-fn input-file)]
