@@ -8,7 +8,8 @@
    [advent-2021.day6 :as day6]
    [advent-2021.day7 :as day7]
    [advent-2021.day8 :as day8]
-   [advent-2021.utils.input :as i]))
+   [advent-2021.utils.input :as i]
+   [clj-time.core :as t]))
 
 (def days [{:input-file "day1"
             :input-parse-fn i/file->int-vec
@@ -51,12 +52,26 @@
             :p2-func day8/sum-digits
             :day-num 8}])
 
+(defn- with-timer
+  [fn input]
+  (let [start-time (t/now)
+        res (fn input)
+        end-time (t/now)]
+    {:result res
+     :time (t/in-millis (t/interval start-time end-time))}))
+
 (defn run-day [{:keys [input-file input-parse-fn p1-func p2-func day-num]}]
   (let [input (input-parse-fn input-file)]
     {:label (str "Day " day-num)
-     :part-1 (when p1-func (p1-func input))
-     :part-2 (when p2-func (p2-func input))}))
+     :part-1 (when p1-func (with-timer p1-func input))
+     :part-2 (when p2-func (with-timer p2-func input))}))
 
 (defn all-days
   []
-  (map run-day days))
+  (let [res (map run-day days)
+        total-time (->> res
+                        (map (fn [{:keys [part-1 part-2]}]
+                               (+ (:time part-1) (:time part-2))))
+                        (apply +))]
+    {:dailies res
+     :cume-time total-time}))
