@@ -9,10 +9,15 @@
     (with-open [reader (io/reader f)]
       (vec (line-seq reader)))))
 
+(defn- strs->ints [strs]
+  (mapv
+   #(Integer/parseInt %)
+   strs))
+
 (defn file->int-vec [file]
   (->> file
        lines
-       (map #(Integer/parseInt %))))
+       strs->ints))
 
 (defn- parse-delim-rows [file delim]
   (->> file
@@ -28,3 +33,9 @@
 
 (defn parse-comma-delim-rows [file]
   (parse-delim-rows file #","))
+
+(defn parse-matrix [file]
+  (->> file
+      lines
+      (mapv #(string/split % #""))
+      (mapv strs->ints)))
