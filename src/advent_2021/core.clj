@@ -9,6 +9,7 @@
    [advent-2021.day7 :as day7]
    [advent-2021.day8 :as day8]
    [advent-2021.day9 :as day9]
+   [advent-2021.day10 :as day10]
    [advent-2021.utils.input :as i]
    [clj-time.core :as t]))
 
@@ -56,7 +57,12 @@
             :input-parse-fn i/parse-matrix
             :p1-func day9/total-risk-level
             :p2-func day9/find-and-multiply-largest-basins
-            :day-num 9}])
+            :day-num 9}
+           {:input-file "day10"
+            :input-parse-fn i/lines
+            :p1-func day10/score-syntax-errors
+            :p2-func day10/complete-and-find-middle-score
+            :day-num 10}])
 
 (defn- with-timer
   [fn input]
