@@ -1,4 +1,4 @@
-(ns advent-2021.day5
+(ns advent-2021.2021.day5
   (:require [clojure.string :as string]))
 
 (defn- parse-coords [coord-str]

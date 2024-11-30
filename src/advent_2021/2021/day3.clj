@@ -1,4 +1,4 @@
-(ns advent-2021.day3)
+(ns advent-2021.2021.day3)
 
 (defn split-digits [binary-string]
   (map #(Character/digit % 2) binary-string))

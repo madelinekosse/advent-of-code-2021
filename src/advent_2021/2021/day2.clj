@@ -1,4 +1,4 @@
-(ns advent-2021.day2)
+(ns advent-2021.2021.day2)
 
 (def directions-p1 {'forward (fn [position distance] (update position :x + distance))
                     'up (fn [position distance] (update position :y + distance))

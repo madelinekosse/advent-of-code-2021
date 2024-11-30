@@ -1,4 +1,4 @@
-(ns advent-2021.day6)
+(ns advent-2021.2021.day6)
 
 (defn- lanternfish-state [[days-to-reproduce frequency]]
   (if (= days-to-reproduce 0)

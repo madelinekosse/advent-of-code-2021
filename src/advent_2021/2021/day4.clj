@@ -1,4 +1,4 @@
-(ns advent-2021.day4
+(ns advent-2021.2021.day4
   (:require [advent-2021.utils.input :as i]))
 
 (defn- parse-boards-from-file [file]

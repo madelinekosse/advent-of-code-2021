@@ -1,5 +1,5 @@
-(ns advent-2021.day4-test
-  (:require [advent-2021.day4 :as sut]
+(ns advent-2021.2021.day4-test
+  (:require [advent-2021.2021.day4 :as sut]
             [clojure.test :refer :all]))
 
 (def board-1 [[22 13 17 11  0]
@@ -59,7 +59,7 @@
              (sut/score winner))))))
 
 (deftest test-parse-input-files
-  (let [inputs (sut/parse-input-files {:boards "day4-sample-boards" :numbers "day4-sample-numbers"})]
+  (let [inputs (sut/parse-input-files {:boards "2021/day4-sample-boards" :numbers "2021/day4-sample-numbers"})]
     (testing "Numbers parsed"
       (is (= numbers-to-call
              (:numbers inputs))))

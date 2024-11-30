@@ -1,4 +1,4 @@
-(ns advent-2021.day1)
+(ns advent-2021.2021.day1)
 
 (defn- count-increases-by-window-size [input-vec window-size]
   (loop [previous-sum (->> input-vec (take window-size) (apply +))

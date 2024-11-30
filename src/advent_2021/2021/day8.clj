@@ -1,4 +1,4 @@
-(ns advent-2021.day8
+(ns advent-2021.2021.day8
   (:require [clojure.string :as string]
             [advent-2021.utils.input :as i]
             [clojure.set :as set]))

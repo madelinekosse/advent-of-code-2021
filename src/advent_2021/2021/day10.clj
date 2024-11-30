@@ -1,4 +1,4 @@
-(ns advent-2021.day10
+(ns advent-2021.2021.day10
   (:require [clojure.string :as string]))
 
 (def brackets {"{" {:type :curly :mode :open}

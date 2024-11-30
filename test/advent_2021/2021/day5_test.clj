@@ -1,10 +1,10 @@
-(ns advent-2021.day5-test
-  (:require [advent-2021.day5 :as sut]
+(ns advent-2021.2021.day5-test
+  (:require [advent-2021.2021.day5 :as sut]
             [advent-2021.utils.input :as i]
             [clojure.test :refer :all]))
 
 (deftest test-parse-input
-  (let [input-rows (i/lines "day5-sample")]
+  (let [input-rows (i/lines "2021/day5-sample")]
     (testing "Coordinates parsed from input"
       (is (= [[{:x 0 :y 9} {:x 5 :y 9}]
               [{:x 8 :y 0} {:x 0 :y 8}]]
@@ -34,7 +34,7 @@
              (sut/points-crossed [{:x 9 :y 7} {:x 7 :y 9}]))))))
 
 (deftest test-count-points-crossed
-  (let [lines (sut/input-rows->lines (i/lines "day5-sample"))]
+  (let [lines (sut/input-rows->lines (i/lines "2021/day5-sample"))]
     (testing "Counts points crossed by more than one line for sample input"
       (testing "Excluding diagonals"
         (is (= 5 (sut/count-intersections (sut/filter-remove-diagonals lines)))))

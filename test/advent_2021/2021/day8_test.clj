@@ -1,17 +1,17 @@
-(ns advent-2021.day8-test
-  (:require [advent-2021.day8 :as sut]
+(ns advent-2021.2021.day8-test
+  (:require [advent-2021.2021.day8 :as sut]
             [clojure.test :refer :all]))
 
 (deftest test-parse-input
   (testing "Parses input correctly"
     (is (= {:signals ["be" "cfbegad" "cbdgef" "fgaecd" "cgeb" "fdcge" "agebfd" "fecdb" "fabcd" "edb"]
             :digits ["fdgacbe" "cefdb" "cefbgd" "gcbe"]}
-           (first (sut/parse-input "day8-sample"))))))
+           (first (sut/parse-input "2021/day8-sample"))))))
 
 (deftest test-part-1
   (testing "Counts number of easy digits in sample input"
     (is (= 26
-           (sut/count-easy-digits (sut/parse-input "day8-sample"))))))
+           (sut/count-easy-digits (sut/parse-input "2021/day8-sample"))))))
 
 (deftest test-part-2
   (let [sample-display {:signals ["acedgfb" "cdfbe" "gcdfa" "fbcad" "dab" "cefabd" "cdfgeb" "eafb" "cagedb" "ab"]
@@ -73,4 +73,4 @@
              (sut/decode-display sample-display)))))
   (testing "correct sum for sample input"
     (is (= 61229
-           (sut/sum-digits (sut/parse-input "day8-sample"))))))
+           (sut/sum-digits (sut/parse-input "2021/day8-sample"))))))

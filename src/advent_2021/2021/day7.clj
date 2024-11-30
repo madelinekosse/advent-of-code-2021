@@ -1,4 +1,4 @@
-(ns advent-2021.day7)
+(ns advent-2021.2021.day7)
 
 (defn- abs [n] (max n (- n)))
 

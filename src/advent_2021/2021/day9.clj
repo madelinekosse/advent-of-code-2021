@@ -1,4 +1,4 @@
-(ns advent-2021.day9)
+(ns advent-2021.2021.day9)
 
 (defn- adjacent [grid [row col]]
   (filter

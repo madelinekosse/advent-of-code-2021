@@ -1,5 +1,5 @@
-(ns advent-2021.day9-test
-  (:require [advent-2021.day9 :as sut]
+(ns advent-2021.2021.day9-test
+  (:require [advent-2021.2021.day9 :as sut]
             [clojure.test :refer :all]))
 
 (def sample-input [[2 1 9 9 9 4 3 2 1 0]

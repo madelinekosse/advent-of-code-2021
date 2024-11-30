@@ -1,5 +1,5 @@
-(ns advent-2021.day3-test
-  (:require [advent-2021.day3 :as sut]
+(ns advent-2021.2021.day3-test
+  (:require [advent-2021.2021.day3 :as sut]
             [clojure.test :refer :all]))
 
 (deftest test-split-digits
