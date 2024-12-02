@@ -1,6 +1,7 @@
 (ns advent-2021.2024
   (:require [advent-2021.2024.day1 :as d1]
-            ))
+            [advent-2021.2024.day2 :as d2]
+            [advent-2021.utils.input :as i]))
 
 (defn- sample-input-file [daynum]
   (format "2024/sample-input/day%s" daynum))
@@ -12,7 +13,11 @@
   [{:day 1
     :parse-fn d1/file->lists
     :part1 d1/part-1
-    :part2 d1/similarity-score}])
+    :part2 d1/similarity-score}
+   {:day 2
+    :parse-fn i/parse-space-delim-rows
+    :part1 (partial d2/num-safe d2/safe?)
+    :part2 (partial d2/num-safe d2/safe-with-dampener?)}])
 
 (defn run-day [{:keys [day parse-fn part1 part2]}]
   (let [sample-input (parse-fn (sample-input-file day))
@@ -25,5 +30,3 @@
 
 (defn run []
   (map run-day days))
-
-
