@@ -2,13 +2,17 @@
   (:require [advent-2021.2024.day1 :as d1]
             [advent-2021.2024.day2 :as d2]
             [advent-2021.2024.day3 :as d3]
-            [advent-2021.utils.input :as i]))
+            [advent-2021.utils.input :as i]
+            [clojure.data :as data]
+            [clojure.edn :as edn]))
 
 (defn- sample-input-file [daynum]
   (format "2024/sample-input/day%s" daynum))
 
 (defn- puzzle-input-file [daynum]
   (format "2024/puzzle-input/day%s" daynum))
+
+(def result-file "output/2024.edn")
 
 (def days
   [{:day 1
@@ -31,11 +35,39 @@
                          (parse-fn sample-input-2)
                          sample-input-1)
         puzzle-input (parse-fn (puzzle-input-file day))]
-    {:part1 {:sample (part1 sample-input-1)
+    {:day day
+     :part1 {:sample (part1 sample-input-1)
              :puzzle (part1 puzzle-input)}
 
      :part2 {:sample (part2 sample-input-2)
              :puzzle (part2 puzzle-input)}}))
 
 (defn run []
-  (map run-day days))
+  (mapv run-day days))
+
+(defn compare [old-results new-results]
+  (let [to-compare (take (count old-results) new-results)
+        [old-diff new-diff in-both] (data/diff old-results to-compare)]
+    (if (and (nil? old-diff) (nil? new-diff))
+      nil
+      {:current old-diff
+       :new new-diff})))
+
+(defn run-and-persist
+  "Update the output file, checking that previous results haven't changed"
+  []
+  (let [current-results (-> result-file
+                            slurp
+                            edn/read-string)
+        new-results (run)
+        comparison (compare current-results new-results)]
+    (if (nil? comparison)
+      (spit result-file (prn-str new-results))
+      (throw (ex-info "Output for previous days has changed" comparison)))))
+
+
+
+(comment
+(run-and-persist)
+
+  )
