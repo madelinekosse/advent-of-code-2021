@@ -36,6 +36,11 @@
 
 (defn parse-matrix [file]
   (->> file
+       lines
+       (mapv #(string/split % #""))
+       (mapv strs->ints)))
+
+(defn parse-str-matrix [file]
+  (->> file
       lines
-      (mapv #(string/split % #""))
-      (mapv strs->ints)))
+      (mapv #(string/split % #""))))

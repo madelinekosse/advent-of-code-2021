@@ -1,9 +1,6 @@
 (ns advent-2021.2024.day3)
 
 (defn matches [instr]
-  (vec (re-seq #"mul\(\d{1,3},\d{1,3}\)" instr)))
-
-(defn matches [instr]
   (vec (re-seq #"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)" instr)))
 
 (defn multiply-match [match]
