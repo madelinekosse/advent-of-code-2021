@@ -3,6 +3,7 @@
             [advent-2021.2024.day2 :as d2]
             [advent-2021.2024.day3 :as d3]
             [advent-2021.2024.day4 :as d4]
+            [advent-2021.2024.day5 :as d5]
             [advent-2021.utils.input :as i]
             [clojure.data :as data]
             [clojure.edn :as edn]))
@@ -32,7 +33,11 @@
    {:day 4
     :parse-fn i/parse-str-matrix
     :part1 d4/part-1
-    :part2 d4/part-2}])
+    :part2 d4/part-2}
+   {:day 5
+    :parse-fn i/lines
+    :part1 d5/part-1
+    :part2 d5/part-2}])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
   (let [sample-input-1 (parse-fn (sample-input-file day))
@@ -40,18 +45,24 @@
                          (parse-fn sample-input-2)
                          sample-input-1)
         puzzle-input (parse-fn (puzzle-input-file day))]
-    {:day day
-     :part1 {:sample (part1 sample-input-1)
-             :puzzle (part1 puzzle-input)}
+    (merge
+     {:day day
+      :part1 {:sample (part1 sample-input-1)
+              :puzzle (part1 puzzle-input)}}
+     (when part2
+       {:part2 {:sample (part2 sample-input-2)
+                :puzzle (part2 puzzle-input)}}))))
 
-     :part2 {:sample (part2 sample-input-2)
-             :puzzle (part2 puzzle-input)}}))
 
 (defn run []
   (mapv run-day days))
 
 (defn compare [old-results new-results]
   (let [to-compare (take (count old-results) new-results)
+        to-compare (concat (butlast to-compare)
+                          [(if (:part2 (last old-results))
+                            (last to-compare)
+                            (dissoc (last to-compare) :part2))])
         [old-diff new-diff in-both] (data/diff old-results to-compare)]
     (if (and (nil? old-diff) (nil? new-diff))
       nil

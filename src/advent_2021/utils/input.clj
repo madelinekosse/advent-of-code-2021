@@ -19,9 +19,8 @@
        lines
        strs->ints))
 
-(defn- parse-delim-rows [file delim]
-  (->> file
-       lines
+(defn parse-delim-rows [lines delim]
+  (->> lines
        (map #(string/split % delim))
        (map #(filter (partial not= "") %))
        (map #(map read-string %))
@@ -29,10 +28,10 @@
        vec))
 
 (defn parse-space-delim-rows [file]
-  (parse-delim-rows file #"\s+"))
+  (parse-delim-rows (lines file) #"\s+"))
 
 (defn parse-comma-delim-rows [file]
-  (parse-delim-rows file #","))
+  (parse-delim-rows (lines file) #","))
 
 (defn parse-matrix [file]
   (->> file
