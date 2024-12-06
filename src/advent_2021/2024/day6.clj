@@ -59,3 +59,26 @@
   (-> grid
       parse-input-grid
       move-guard))
+
+(defn infinite-loop? [state [obstacle-row obstacle-col]]
+  (let [new-state (assoc-in state [:grid obstacle-row obstacle-col] "#")
+        fut (future (move-guard new-state))]
+    (try
+      (let [result (deref fut 100 :timeout)]
+        (if (= result :timeout)
+          (do
+            (future-cancel fut)
+            true)
+          false))
+      (catch Exception e
+        (println "An error occurred: " e)))))
+
+(defn part-2 [grid]
+  (let [start-state (parse-input-grid grid)
+        positions-to-check (for [r (range (count grid))
+                                 c (range (count (first grid)))]
+                             [r c])]
+    (->> positions-to-check
+         (map (partial infinite-loop? start-state))
+         (filter true?)
+         count)))

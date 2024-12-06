@@ -41,7 +41,8 @@
     :part2 d5/part-2}
    {:day 6
     :parse-fn i/parse-str-matrix
-    :part1 d6/part-1])
+    :part1 d6/part-1
+    :part2 d6/part-2}])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
   (let [sample-input-1 (parse-fn (sample-input-file day))
