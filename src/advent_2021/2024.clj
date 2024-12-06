@@ -4,6 +4,7 @@
             [advent-2021.2024.day3 :as d3]
             [advent-2021.2024.day4 :as d4]
             [advent-2021.2024.day5 :as d5]
+            [advent-2021.2024.day6 :as d6]
             [advent-2021.utils.input :as i]
             [clojure.data :as data]
             [clojure.edn :as edn]))
@@ -37,7 +38,10 @@
    {:day 5
     :parse-fn i/lines
     :part1 d5/part-1
-    :part2 d5/part-2}])
+    :part2 d5/part-2}
+   {:day 6
+    :parse-fn i/parse-str-matrix
+    :part1 d6/part-1])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
   (let [sample-input-1 (parse-fn (sample-input-file day))
