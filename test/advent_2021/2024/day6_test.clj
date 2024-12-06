@@ -19,3 +19,7 @@
     (is (= 41
            (sut/part-1 sample-grid)))))
 
+(deftest test-part-2
+  (testing "For sample input"
+    (is (= 6
+           (sut/part-2 sample-grid)))))

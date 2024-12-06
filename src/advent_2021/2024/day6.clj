@@ -1,6 +1,5 @@
 (ns advent-2021.2024.day6
-  (:require [advent-2021.utils.input :as input]
-            [clojure.core.async :refer [timeout]]))
+  (:require [advent-2021.utils.input :as input]))
 
 
 (defn position-of-guard [grid]
@@ -49,29 +48,29 @@
 
 (defn move-guard [start-state]
   (loop [state start-state
-         positions-seen #{(:guardpos start-state)}]
+         states-seen #{start-state}]
     (let [{:keys [finished?] :as new-state} (move-one state)]
-      (if finished?
-        (count positions-seen)
-        (recur new-state (conj positions-seen (:guardpos new-state)))))))
+      (cond finished? {:status :finished
+                       :num-positions (->> states-seen
+                                           (map :guardpos)
+                                           set
+                                           count)}
+            (contains? states-seen new-state) {:status :loop}
+            :else (recur new-state (conj states-seen new-state))))))
+
 
 (defn part-1 [grid]
   (-> grid
       parse-input-grid
-      move-guard))
+      move-guard
+      :num-positions))
 
 (defn infinite-loop? [state [obstacle-row obstacle-col]]
-  (let [new-state (assoc-in state [:grid obstacle-row obstacle-col] "#")
-        fut (future (move-guard new-state))]
-    (try
-      (let [result (deref fut 100 :timeout)]
-        (if (= result :timeout)
-          (do
-            (future-cancel fut)
-            true)
-          false))
-      (catch Exception e
-        (println "An error occurred: " e)))))
+  (-> state
+      (assoc-in [:grid obstacle-row obstacle-col] "#")
+      move-guard
+      :status
+      (= :loop)))
 
 (defn part-2 [grid]
   (let [start-state (parse-input-grid grid)
