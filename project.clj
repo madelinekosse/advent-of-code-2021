@@ -5,5 +5,6 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [clj-time "0.15.2"]
-                 [org.clojure/core.async "1.6.673"]]
+                 [org.clojure/core.async "1.6.673"]
+                 [org.clojure/math.combinatorics "0.1.6"]]
   :repl-options {:init-ns advent-2021.core})
