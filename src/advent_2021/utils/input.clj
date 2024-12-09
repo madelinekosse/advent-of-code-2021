@@ -9,6 +9,12 @@
     (with-open [reader (io/reader f)]
       (vec (line-seq reader)))))
 
+(defn single-line [file]
+  (let [file-lines (lines file)]
+    (if (> (count file-lines) 1)
+      (throw (ex-info "Expected single line in file" {:file file}))
+      (first file-lines))))
+
 (defn- strs->ints [strs]
   (mapv
    #(Integer/parseInt %)

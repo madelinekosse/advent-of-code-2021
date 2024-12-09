@@ -7,6 +7,7 @@
             [advent-2021.2024.day6 :as d6]
             [advent-2021.2024.day7 :as d7]
             [advent-2021.2024.day8 :as d8]
+            [advent-2021.2024.day9 :as d9]
             [advent-2021.utils.input :as i]
             [clojure.data :as data]
             [clojure.edn :as edn]))
@@ -44,7 +45,7 @@
    {:day 6
     :parse-fn i/parse-str-matrix
     :part1 d6/part-1
-    :part2 (fn [x] (if (< (count x) 20) 6 1721))}
+    :part2 d6/part-2}
    {:day 7
     :parse-fn i/lines
     :part1 d7/part-1
@@ -52,7 +53,10 @@
    {:day 8
     :parse-fn i/parse-str-matrix
     :part1 d8/part-1
-    :part2 d8/part-2}])
+    :part2 d8/part-2}
+   {:day 9
+    :parse-fn i/single-line
+    :part1 d9/part-1}])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
   (let [sample-input-1 (parse-fn (sample-input-file day))
@@ -97,8 +101,22 @@
       (throw (ex-info "Output for previous days has changed" comparison)))))
 
 
+(defn run-and-persist-one-day
+  "Run and persist, but only for one day"
+  [day-number]
+  (let [current-results (-> result-file
+                            slurp
+                            edn/read-string)
+        day-index (dec day-number)
+        this-day-result (run-day (nth days day-index))
+        new-results (assoc current-results day-index this-day-result)
+        comparison (compare current-results new-results)]
+    (if (nil? comparison)
+      (spit result-file (prn-str new-results))
+      (throw (ex-info "Output for previous days has changed" comparison)))))
 
 (comment
-(run-and-persist)
+
+(run-and-persist-one-day 9)
 
   )
