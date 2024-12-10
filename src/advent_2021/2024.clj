@@ -8,6 +8,7 @@
             [advent-2021.2024.day7 :as d7]
             [advent-2021.2024.day8 :as d8]
             [advent-2021.2024.day9 :as d9]
+            [advent-2021.2024.day10 :as d10]
             [advent-2021.utils.input :as i]
             [clojure.data :as data]
             [clojure.edn :as edn]))
@@ -56,7 +57,10 @@
     :part2 d8/part-2}
    {:day 9
     :parse-fn i/single-line
-    :part1 d9/part-1}])
+    :part1 d9/part-1}
+   {:day 10
+    :parse-fn i/parse-matrix
+    :part1 d10/part-1}])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
   (let [sample-input-1 (parse-fn (sample-input-file day))
@@ -65,9 +69,10 @@
                          sample-input-1)
         puzzle-input (parse-fn (puzzle-input-file day))]
     (merge
-     {:day day
-      :part1 {:sample (part1 sample-input-1)
-              :puzzle (part1 puzzle-input)}}
+     {:day day}
+     (when part1
+       {:part1 {:sample (part1 sample-input-1)
+                :puzzle (part1 puzzle-input)}})
      (when part2
        {:part2 {:sample (part2 sample-input-2)
                 :puzzle (part2 puzzle-input)}}))))
@@ -117,6 +122,6 @@
 
 (comment
 
-(run-and-persist-one-day 9)
+(run-and-persist-one-day 10)
 
   )
