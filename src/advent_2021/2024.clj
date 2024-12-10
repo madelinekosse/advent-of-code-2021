@@ -57,7 +57,8 @@
     :part2 d8/part-2}
    {:day 9
     :parse-fn i/single-line
-    :part1 d9/part-1}
+    :part1 d9/part-1
+    :part2 d9/part-2}
    {:day 10
     :parse-fn i/parse-matrix
     :part1 d10/part-1
@@ -123,6 +124,6 @@
 
 (comment
 
-(run-and-persist-one-day 10)
+(run-and-persist-one-day 9)
 
   )
