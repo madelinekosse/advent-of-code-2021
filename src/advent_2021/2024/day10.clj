@@ -19,18 +19,26 @@
       [start-position]
         (->> (valid-steps start-position trailmap)
              (map (partial summits-reachable trailmap))
-             (apply concat)
-             set))))
+             (apply concat)))))
 
-(defn check-trailhead [trailmap start-position]
+(defn check-trailhead [{:keys [trailmap distinct?]} start-position]
   (let [val (get-in trailmap start-position)]
     (if (not= 0 val)
       0
-      (count (summits-reachable trailmap start-position)))))
+      (let [summits (summits-reachable trailmap start-position)]
+        (if distinct?
+          (count (set summits))
+          (count summits))))))
 
-(defn part-1 [trailmap]
+(defn all-trail-scores-sum [trailmap distinct?]
   (->> (for [r (range (count trailmap))
              c (range (count (first trailmap)))]
          [r c])
-       (map (partial check-trailhead trailmap))
+       (map (partial check-trailhead {:trailmap trailmap :distinct? distinct?}))
        (apply +)))
+
+(defn part-1 [trailmap]
+  (all-trail-scores-sum trailmap true))
+
+(defn part-2 [trailmap]
+  (all-trail-scores-sum trailmap false))
