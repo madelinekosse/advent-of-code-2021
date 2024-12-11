@@ -9,6 +9,7 @@
             [advent-2021.2024.day8 :as d8]
             [advent-2021.2024.day9 :as d9]
             [advent-2021.2024.day10 :as d10]
+            [advent-2021.2024.day11 :as d11]
             [advent-2021.utils.input :as i]
             [clojure.data :as data]
             [clojure.edn :as edn]))
@@ -62,7 +63,12 @@
    {:day 10
     :parse-fn i/parse-matrix
     :part1 d10/part-1
-    :part2 d10/part-2}])
+    :part2 d10/part-2}
+   {:day 11
+    :parse-fn d11/read-file
+    :part1 d10/part-1
+    }
+   ])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
   (let [sample-input-1 (parse-fn (sample-input-file day))
@@ -124,6 +130,6 @@
 
 (comment
 
-(run-and-persist-one-day 9)
+(run-and-persist-one-day 11)
 
   )
