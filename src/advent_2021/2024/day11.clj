@@ -17,12 +17,10 @@
     :else (conj (lazy-seq []) (str (* 2024 (Long/parseLong stone))))))
 
 (defn blink [stones]
-  (->> stones
-       (map blink-at)
-       flatten))
+  (mapcat blink-at stones))
 
 (defn blink-n-times [stones n]
-  (loop [state stones
+  (loop [state (lazy-seq stones)
          counter 0]
     (if (= counter n)
       state
