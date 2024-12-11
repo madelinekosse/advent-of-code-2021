@@ -23,18 +23,16 @@
            (sut/blink-at "999"))
         "big num")))
 
-(deftest test-blink
-  (testing "First blink"
-    (is (= ["253000" "1" "7"]
-           (sut/blink sample-stones)))))
+(deftest test-blink-and-count-one-stone
+  (testing "125"
+    (is (= 1 (sut/blink-and-count-one-stone "125" 1)) "One time")
+    (is (= 2 (sut/blink-and-count-one-stone "125" 2)) "2 times")
+    (is (= 2 (sut/blink-and-count-one-stone "125" 3)) "3 times")
+    (is (= 3 (sut/blink-and-count-one-stone "125" 4)) "4 times")))
 
-(deftest test-n-blinks
-  (testing "second blink"
-    (is (= ["253" "0" "2024" "14168"]
-           (sut/blink-n-times sample-stones 2))))
+(deftest test-blink-n-times-and-count
   (testing "6 blinks"
-    (is (= ["2097446912" "14168" "4048" "2" "0" "2" "4" "40" "48" "2024" "40" "48" "80" "96" "2" "8" "6" "7" "6" "0" "3" "2"]
-           (sut/blink-n-times sample-stones 6)))))
+    (is (= 22 (sut/blink-n-times-and-count sample-stones 6)))))
 
 (deftest test-part-1
   (testing "ssample input"
