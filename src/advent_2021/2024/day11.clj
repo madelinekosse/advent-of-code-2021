@@ -24,34 +24,18 @@
       (recur (mapcat blink-at stones) (dec n)))))
 
 
-(defn sidelong-reduce
-  "Totally copied this from someone smarter:
-  https://jeffterrell.tech/posts/2015-02-24-lazy-reduce-in-clojure/
-
-  Do a lazy reduce, returning the original (lazy) sequence,
-  and passing the final accumulator value to `store-result!`
-  when the sequence is fully realized."
-  [seq f accum store-result!]
-  (lazy-seq
-   (if (empty? seq)
-     (do (store-result! accum) nil)
-     (let [[fst & rst] seq]
-       (cons fst
-             (sidelong-reduce rst f (f accum fst) store-result!))))))
-
-(defn sidelong-sum
-  [nums result-atom]
-  (sidelong-reduce nums + 0 #(reset! result-atom %)))
-
 (defn blink-n-times-and-count [stones num-times]
-  (let [lazy-results (map
-                      #(blink-and-count-one-stone % num-times)
-                      (lazy-seq stones))
-        sum-atom (atom nil)]
-    (dorun (sidelong-sum lazy-results sum-atom))
-    @sum-atom
-  ))
-
+   (let [cache (atom {})] ; Cache for storing precomputed results
+     (loop [to-do (lazy-seq stones)
+            acc 0]
+       (if-let [stone (first to-do)]
+         (let [result (if-let [cached (get @cache [stone num-times])]
+                        cached
+                       (let [computed (blink-and-count-one-stone stone num-times)]
+                          (swap! cache assoc [stone num-times] computed)
+                         computed))]
+           (recur (rest to-do) (+ acc result)))
+        acc))))
 
 (defn part-1 [stones]
   (blink-n-times-and-count stones 25))
