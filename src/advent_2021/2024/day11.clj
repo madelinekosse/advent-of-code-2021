@@ -4,20 +4,17 @@
 
 
 (defn- split-in-half [stone]
-  (->> stone
-       (partition (/ (count stone) 2))
-       (map (partial apply str))
-       (map #(Long/parseLong %))
-       (map str)))
+  (let [half (quot (count stone) 2)
+        p1 (subs stone 0 half)
+        p2 (string/replace (subs stone half) #"^0+" "")]
+    (lazy-seq [p1 (if (empty? p2) "0" p2)])))
+
 
 (defn blink-at [stone]
   (cond
     (= stone "0") ["1"]
     (even? (count stone)) (split-in-half stone)
-    :else (-> (Long/parseLong stone)
-              (* 2024)
-              str
-              vector)))
+    :else (conj (lazy-seq []) (str (* 2024 (Long/parseLong stone))))))
 
 (defn blink [stones]
   (->> stones
