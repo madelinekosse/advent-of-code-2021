@@ -74,7 +74,8 @@
     :part1 d12/part-1}
    {:day 13
     :parse-fn i/lines
-    :part1 d13/part-1}
+    :part1 d13/part-1
+    :part2 d13/part-2}
    ])
 
 (defn run-day [{:keys [day parse-fn part1 part2 sample-input-2]}]
